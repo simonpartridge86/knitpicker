@@ -1,10 +1,43 @@
 body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    background-color: #f0f0f0;
-  }
-  h1 {
-    color: #333;
-  }
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  box-sizing: border-box;
+}
+h1 {
+  color: green;
+}
+
+.grid-container {
+  display: grid;
+  gap: 5px; /* Space between grid items */
+  justify-content: center;
+  align-items: center;
+  margin: 20px;
+}
+
+/* Define each grid item */
+.grid-item {
+  width: 50px;
+  height: 50px;
+  background-color: lightgray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  height: 50px;
+  width: 50px;
+}
+
+/* False elements styling */
+.grid-item.false {
+  background-color: white;
+}
+
+/* True elements styling (if toggled) */
+.grid-item.true {
+  background-color: black;
+}
