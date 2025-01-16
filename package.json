@@ -1,0 +1,17 @@
+{
+  "name": "knitpicker",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "clean": "rm -rf dist && echo 'Done.'",
+    "build": "bun build --experimental-html --experimental-css ./src/index.html --outdir=dist",
+    "dev": "bun run build --watch",
+    "start": "serve dist"
+  }
+}
