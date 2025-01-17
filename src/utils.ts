@@ -26,10 +26,14 @@ export const renderEmptyGrid = (width: number, length: number) => {
 
   gridContainer.innerHTML = ""; // clears previous grid content
   gridContainer.style.gridTemplateColumns = `repeat(${width}, 1fr)`;
+  const gridContainerWidth = gridContainer.offsetWidth;
 
   grid.forEach((row, rowIndex) => {
     row.forEach((cellValue, colIndex) => {
       const pixel = createPixelElement(cellValue);
+      pixel.style.width = `${gridContainerWidth / width}px`;
+      console.log(pixel.style.width);
+      pixel.style.height = pixel.style.width;
 
       pixel.addEventListener("mousedown", (e) => {
         e.preventDefault();

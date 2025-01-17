@@ -1,7 +1,7 @@
 import { renderEmptyGrid } from "./utils";
 
-let defaultWidth = 10;
-let defaultHeight = 10;
+let defaultWidth = 50;
+let defaultHeight = 25;
 
 renderEmptyGrid(defaultWidth, defaultHeight);
 
