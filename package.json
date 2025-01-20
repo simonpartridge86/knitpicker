@@ -15,7 +15,7 @@
   "scripts": {
     "clean": "rm -rf dist && echo 'Done.'",
     "build": "bun build --experimental-html --experimental-css ./src/index.html --outdir=dist",
-    "dev": "bun run build --watch",
+    "watch": "bun run build --watch",
     "start": "serve dist"
   }
 }
