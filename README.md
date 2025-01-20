@@ -1,4 +1,4 @@
-# knitpicker
+# knitpix
 
 To install dependencies:
 
