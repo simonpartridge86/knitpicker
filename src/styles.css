@@ -1,16 +1,16 @@
 body {
   font-family: Arial, sans-serif;
-  text-align: center;
   margin: 0;
   padding: 0;
-  background-color: lightgrey;
   box-sizing: border-box;
+  background: #333333;
+  color: #ffffff;
 }
-h1 {
+/* h1 {
   color: green;
-}
+} */
 
-.grid-container {
+/* .grid-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -27,8 +27,8 @@ h1 {
   width: 100%;
   height: auto;
 }
-
 /* Define each grid item */
+/* 
 .pixel {
   height: auto;
   width: auto;
@@ -39,18 +39,33 @@ h1 {
   font-size: 16px;
   cursor: pointer;
 }
-
+*/
 /* Unselected pixel styling */
-.pixel.false {
+/* .pixel.false {
   background-color: white;
-}
+} */
 
 /* Selected pixel styling */
-.pixel.true {
+/* .pixel.true {
   background-color: black;
-}
+} */
 
-.clear-button {
+/* .clear-button {
   margin: 20px;
   font-size: 16px;
+} */
+
+#canvas {
+  cursor: pointer;
+}
+
+#guide {
+  display: grid;
+  pointer-events: none;
+  position: absolute;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#guide div {
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
