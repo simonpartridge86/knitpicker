@@ -1,6 +1,3 @@
-/**
- * @type HTMLCanvasElement
- */
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const guide = document.getElementById("guide") as HTMLDivElement;
 const colorInput = document.getElementById("colorInput") as HTMLInputElement;
@@ -63,7 +60,7 @@ const handleClearButtonClick = () => {
 };
 
 const handleToggleGuideChange = () => {
-  guide.style.display = toggleGuide.checked ? "block" : "none";
+  guide.style.display = toggleGuide.checked ? "" : "none";
 };
 
 const fillCell = (cellX: number, cellY: number) => {
@@ -73,7 +70,6 @@ const fillCell = (cellX: number, cellY: number) => {
   drawingContext.fillStyle = colorInput.value;
   drawingContext.fillRect(startX, startY, cellPixelLength, cellPixelLength);
   colorHistory[`${cellX}_${cellY}`] = colorInput.value;
-  console.log("2", colorHistory);
 };
 
 canvas.addEventListener("mousedown", handleCanvasMousedown);
