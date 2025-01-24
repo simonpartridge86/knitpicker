@@ -1,39 +1,23 @@
-import { renderEmptyGrid } from "./helpers";
-
-// let defaultWidth = 50;
-// let defaultHeight = 25;
-
-// renderEmptyGrid(defaultWidth, defaultHeight);
-
-// const setupClearButton = () => {
-//   const clearButton = document.getElementById("clear") as HTMLButtonElement;
-//   clearButton.onclick = () => renderEmptyGrid(defaultWidth, defaultHeight);
-// };
-// setupClearButton();
-
 /**
  * @type HTMLCanvasElement
  */
-
 const canvas = document.getElementById("canvas") as HTMLCanvasElement;
 const guide = document.getElementById("guide") as HTMLDivElement;
-// const colorInput = document.getElementById("colorInput");
+const colorInput = document.getElementById("colorInput") as HTMLInputElement;
 const toggleGuide = document.getElementById("toggleGuide") as HTMLInputElement;
 const clearButton = document.getElementById("clearButton") as HTMLButtonElement;
 const drawingContext = canvas.getContext("2d") as CanvasRenderingContext2D;
 
 const CELL_SIDE_COUNT = 5;
 const cellPixelLength = canvas.width / CELL_SIDE_COUNT;
-// const colorHistory = {};
+const colorHistory = {} as Record<string, string>;
 
 // Set default color
-// colorInput.value = "#009578";
+colorInput.value = "#009578";
 
 // Initialize the canvas background
-{
-  drawingContext.fillStyle = "#ffffff";
-  drawingContext.fillRect(0, 0, canvas.width, canvas.height);
-}
+drawingContext.fillStyle = "#ffffff";
+drawingContext.fillRect(0, 0, canvas.width, canvas.height);
 
 // Setup the guide
 {
@@ -58,38 +42,39 @@ function handleCanvasMousedown(e: MouseEvent) {
   const y = e.clientY - canvasBoundingRect.top;
   const cellX = Math.floor(x / cellPixelLength);
   const cellY = Math.floor(y / cellPixelLength);
-  // const currentColor = colorHistory[`${cellX}_${cellY}`];
+  const currentColor = colorHistory[`${cellX}_${cellY}`];
 
-  // if (e.ctrlKey) {
-  //   if (currentColor) {
-  //     colorInput.value = currentColor;
-  //   }
-  // } else {
-  fillCell(cellX, cellY);
-  // }
+  if (e.ctrlKey || e.metaKey) {
+    if (currentColor) {
+      colorInput.value = currentColor;
+    }
+  } else {
+    fillCell(cellX, cellY);
+  }
 }
 
-function handleClearButtonClick() {
+const handleClearButtonClick = () => {
   const yes = confirm("Are you sure you wish to clear the canvas?");
 
   if (!yes) return;
 
   drawingContext.fillStyle = "#ffffff";
   drawingContext.fillRect(0, 0, canvas.width, canvas.height);
-}
+};
 
-function handleToggleGuideChange() {
-  guide.style.display = toggleGuide.checked ? "" : "none";
-}
+const handleToggleGuideChange = () => {
+  guide.style.display = toggleGuide.checked ? "block" : "none";
+};
 
-function fillCell(cellX: number, cellY: number) {
+const fillCell = (cellX: number, cellY: number) => {
   const startX = cellX * cellPixelLength;
   const startY = cellY * cellPixelLength;
 
-  drawingContext.fillStyle = "green";
+  drawingContext.fillStyle = colorInput.value;
   drawingContext.fillRect(startX, startY, cellPixelLength, cellPixelLength);
-  // colorHistory[`${cellX}_${cellY}`] = colorInput.value;
-}
+  colorHistory[`${cellX}_${cellY}`] = colorInput.value;
+  console.log("2", colorHistory);
+};
 
 canvas.addEventListener("mousedown", handleCanvasMousedown);
 clearButton.addEventListener("click", handleClearButtonClick);

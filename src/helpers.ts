@@ -72,3 +72,11 @@ export const renderEmptyGrid = (width: number, length: number) => {
     });
   });
 };
+
+export const setupClearButton = (
+  defaultWidth: number,
+  defaultHeight: number
+) => {
+  const clearButton = document.getElementById("clear") as HTMLButtonElement;
+  clearButton.onclick = () => renderEmptyGrid(defaultWidth, defaultHeight);
+};
