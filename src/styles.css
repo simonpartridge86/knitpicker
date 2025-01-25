@@ -3,69 +3,21 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background: #333333;
-  color: #ffffff;
+  background: grey;
+  color: white;
 }
-/* h1 {
-  color: green;
-} */
-
-/* .grid-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.grid {
-  display: grid;
-  justify-content: center;
-  align-items: center;
-  margin: 50px;
-  gap: 1px;
-  background-color: grey;
-  border: 1px solid grey;
-  width: 100%;
-  height: auto;
-}
-/* Define each grid item */
-/* 
-.pixel {
-  height: auto;
-  width: auto;
-  background-color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 16px;
-  cursor: pointer;
-}
-*/
-/* Unselected pixel styling */
-/* .pixel.false {
-  background-color: white;
-} */
-
-/* Selected pixel styling */
-/* .pixel.true {
-  background-color: black;
-} */
-
-/* .clear-button {
-  margin: 20px;
-  font-size: 16px;
-} */
 
 #canvas {
   cursor: pointer;
 }
 
-#guide {
+#grid {
   display: grid;
   pointer-events: none;
   position: absolute;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
+  border: 1px solid black;
 
-#guide div {
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  div {
+    border: 1px solid black;
+  }
 }
