@@ -19,7 +19,7 @@ body {
 #colorCanvas {
   position: absolute;
   border: 4px solid black;
-  cursor: url(../images/custom-crosshair.png) 12 12, pointer;
+  cursor: url(../images/custom-crosshair.png) 8 8, pointer;
 }
 
 #gridCanvas {
