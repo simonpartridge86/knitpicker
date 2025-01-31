@@ -3,22 +3,27 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
   background: grey;
   color: white;
+  box-sizing: border-box;
 }
 
-#canvas {
+#canvasContainer {
+  position: relative;
+  background-color: lightcoral;
+  height: 500px;
+  width: 100%;
+  padding: 10px;
+}
+
+#colorCanvas {
+  position: absolute;
+  border: 4px solid black;
   cursor: url(../images/custom-crosshair.png) 12 12, pointer;
 }
 
-#grid {
-  display: grid;
-  pointer-events: none;
+#gridCanvas {
   position: absolute;
-  border: 1px solid black;
-
-  div {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-  }
+  border: 4px solid black;
+  pointer-events: none;
 }

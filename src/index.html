@@ -14,26 +14,26 @@
   <body>
     <div>
       <div>
-        <label for="row-number">Row Number:</label>
-        <select id="row-number"></select>
-        <label for="stitch-number">Stitch Number:</label>
-        <select id="stitch-number"></select>
+        <label for="rowNum">Row Number:</label>
+        <select id="rowNum"></select>
+        <label for="stitchNum">Stitch Number:</label>
+        <select id="stitchNum"></select>
       </div>
     </div>
-    <div>
-      <div id="grid"></div>
-      <canvas width="900" height="450" id="canvas"></canvas>
+    <div id="canvasContainer">
+      <canvas width="900" height="450" id="colorCanvas"></canvas>
+      <canvas width="900" height="450" id="gridCanvas"></canvas>
     </div>
     <div>
-      <label for="color-input">Set Color:</label>
-      <input type="color" id="color-input" />
+      <label for="colorInput">Set Color:</label>
+      <input type="color" id="colorInput" />
     </div>
     <div>
-      <label for="toggle-grid">Show Grid Lines:</label>
-      <input type="checkbox" id="toggle-grid" checked />
+      <label for="toggleGrid">Show Grid Lines:</label>
+      <input type="checkbox" id="toggleGrid" checked />
     </div>
     <div>
-      <button type="button" id="clear-button">Clear</button>
+      <button type="button" id="clearButton">Clear</button>
     </div>
     <script type="module" src="./main.ts" defer></script>
   </body>
