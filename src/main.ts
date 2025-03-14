@@ -20,8 +20,13 @@ const MAX_STITCH_NUMBER = 50;
 const MAX_ROW_NUMBER = 20;
 const PIXEL_SIZE = 20;
 const colorHistory = {} as Record<string, string>;
+
+// Variable definitions
 let canvasWidth = PIXEL_SIZE * MIN_STITCH_NUMBER;
 let canvasHeight = PIXEL_SIZE * MIN_ROW_NUMBER;
+let isMouseDown = false;
+let lastX = 0;
+let lastY = 0;
 
 // Set default color
 colorInput.value = "#009578";
@@ -29,39 +34,6 @@ colorInput.value = "#009578";
 // Initialize color canvas background
 drawingContext.fillStyle = "#ffffff";
 drawingContext.fillRect(0, 0, canvasWidth, canvasHeight);
-
-// Setup grid lines
-function drawGrid(stitchNumber: number, rowNumber: number) {
-  canvasWidth = PIXEL_SIZE * stitchNumber;
-  canvasHeight = PIXEL_SIZE * rowNumber;
-  colorCanvas.width = canvasWidth;
-  colorCanvas.height = canvasHeight;
-  gridCanvas.width = canvasWidth;
-  gridCanvas.height = canvasHeight;
-
-  gridContext.clearRect(0, 0, canvasWidth, canvasHeight);
-  drawingContext.fillStyle = "#ffffff";
-  drawingContext.fillRect(0, 0, canvasWidth, canvasHeight);
-
-  gridContext.strokeStyle = "#000000";
-  gridContext.lineWidth = 2;
-
-  for (let i = 1; i < stitchNumber; i++) {
-    gridContext.beginPath();
-    gridContext.moveTo(i * PIXEL_SIZE, 0);
-    gridContext.lineTo(i * PIXEL_SIZE, canvasHeight);
-    gridContext.stroke();
-  }
-
-  for (let i = 1; i < rowNumber; i++) {
-    gridContext.beginPath();
-    gridContext.moveTo(0, i * PIXEL_SIZE);
-    gridContext.lineTo(canvasWidth, i * PIXEL_SIZE);
-    gridContext.stroke();
-  }
-}
-
-drawGrid(MIN_STITCH_NUMBER, MIN_ROW_NUMBER);
 
 // Setup stitch/row select menus
 {
@@ -78,6 +50,46 @@ drawGrid(MIN_STITCH_NUMBER, MIN_ROW_NUMBER);
       `<option ${i + 1 === MIN_ROW_NUMBER && "selected"}>${i + 1}</option>`
     )
   );
+}
+
+// Setup grid lines
+function drawGrid(stitchNumber: number, rowNumber: number) {
+  canvasWidth = PIXEL_SIZE * stitchNumber;
+  canvasHeight = PIXEL_SIZE * rowNumber;
+
+  // Style updates to facilitate width/height CSS transitions
+  colorCanvas.style.width = `${canvasWidth}px`;
+  colorCanvas.style.height = `${canvasHeight}px`;
+  gridCanvas.style.width = `${canvasWidth}px`;
+  gridCanvas.style.height = `${canvasHeight}px`;
+
+  // Update canvas dimensions
+  colorCanvas.width = canvasWidth;
+  colorCanvas.height = canvasHeight;
+  gridCanvas.width = canvasWidth;
+  gridCanvas.height = canvasHeight;
+
+  // Reset canvases
+  gridContext.clearRect(0, 0, canvasWidth, canvasHeight);
+  drawingContext.fillStyle = "#ffffff";
+  drawingContext.fillRect(0, 0, canvasWidth, canvasHeight);
+  gridContext.strokeStyle = "#000000";
+  gridContext.lineWidth = 2;
+
+  // Create grid lines
+  for (let i = 1; i < stitchNumber; i++) {
+    gridContext.beginPath();
+    gridContext.moveTo(i * PIXEL_SIZE, 0);
+    gridContext.lineTo(i * PIXEL_SIZE, canvasHeight);
+    gridContext.stroke();
+  }
+
+  for (let i = 1; i < rowNumber; i++) {
+    gridContext.beginPath();
+    gridContext.moveTo(0, i * PIXEL_SIZE);
+    gridContext.lineTo(canvasWidth, i * PIXEL_SIZE);
+    gridContext.stroke();
+  }
 }
 
 function handleCanvasClick(e: MouseEvent) {
@@ -99,6 +111,23 @@ function handleCanvasClick(e: MouseEvent) {
     }
   } else {
     fillCell(cellX, cellY);
+  }
+}
+
+function handleCanvasMouseMove(e: MouseEvent) {
+  if (isMouseDown) {
+    const canvasBoundingRect = colorCanvas.getBoundingClientRect();
+    const x = e.clientX - canvasBoundingRect.left;
+    const y = e.clientY - canvasBoundingRect.top;
+
+    if (
+      Math.abs(x - lastX) >= PIXEL_SIZE ||
+      Math.abs(y - lastY) >= PIXEL_SIZE
+    ) {
+      lastX = Math.floor(x / PIXEL_SIZE) * PIXEL_SIZE;
+      lastY = Math.floor(y / PIXEL_SIZE) * PIXEL_SIZE;
+      handleCanvasClick(e);
+    }
   }
 }
 
@@ -137,10 +166,31 @@ function onDimensionsChange() {
 //   console.log("width:", windowWidth, "height:", windowHeight);
 // }
 
-colorCanvas.addEventListener("mousedown", handleCanvasClick);
+// Canvas mouse event listeners
+colorCanvas.addEventListener("mousedown", (e) => {
+  isMouseDown = true;
+  const canvasBoundingRect = colorCanvas.getBoundingClientRect();
+  const x = e.clientX - canvasBoundingRect.left;
+  const y = e.clientY - canvasBoundingRect.top;
+  lastX = Math.floor(x / PIXEL_SIZE) * PIXEL_SIZE;
+  lastY = Math.floor(y / PIXEL_SIZE) * PIXEL_SIZE;
+  handleCanvasClick(e);
+});
+colorCanvas.addEventListener("mousemove", handleCanvasMouseMove);
+colorCanvas.addEventListener("mouseleave", () => {
+  isMouseDown = false;
+});
+colorCanvas.addEventListener("mouseup", () => {
+  isMouseDown = false;
+});
+
+// Other event listeners
 clearButton.addEventListener("click", handleClearCanvas);
 toggleGrid.addEventListener("change", handleToggleGrid);
 stitchNumberSelectMenu.addEventListener("change", onDimensionsChange);
 rowNumberSelectMenu.addEventListener("change", onDimensionsChange);
 // window.addEventListener("DOMContentLoaded", onWindowResize);
 // window.addEventListener("resize", onWindowResize);
+
+// Initial set up
+drawGrid(MIN_STITCH_NUMBER, MIN_ROW_NUMBER);
